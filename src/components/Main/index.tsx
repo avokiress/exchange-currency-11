@@ -13,6 +13,7 @@ export const Main = () => {
   }, [])
 
   console.log('symbols: ', symbols);
+  console.log('loading: ', loading);
   if (loading) return <p>Loading...</p>
   
 
