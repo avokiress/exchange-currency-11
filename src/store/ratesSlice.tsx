@@ -12,7 +12,7 @@ interface Returned {
 
 const initialState = {
   rates: [],
-  loading: 'idle',
+  loading: false,
   error: ''
 } as unknown as RatesState;
 
