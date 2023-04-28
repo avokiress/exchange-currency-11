@@ -49,6 +49,7 @@ src/hooks/ <br/>
 src/constants/ <br/>
 src/context/ <br/>
 src/layouts/ <br/>
+src/store/ <br/>
 </p>
 
 прописала alias
