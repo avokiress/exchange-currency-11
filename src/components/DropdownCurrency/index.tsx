@@ -28,13 +28,13 @@ export const DropdownCurrency = ({ title, field, currency = '' }: DropdownData) 
     return (
       <MenuItem key={__currency} value={__currency}>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          {__currency &&
+          {__currency
+            ?
             <>
               <div className={`currency-flag currency-flag-xl currency-flag-${code}`}></div>
               <p>{name}</p>
             </>
-          }
-          {!__currency &&
+            :
             <p>Select currency</p>
           }
         </Box>
