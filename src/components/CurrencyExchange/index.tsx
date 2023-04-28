@@ -3,39 +3,49 @@ import { useState } from 'react';
 import countryData from 'constants/countryData.json';
 import countryCurrencySymbol from 'constants/countryCurrencySymbol';
 
-import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import FormHelperText from '@mui/material/FormHelperText';
 
 console.log('countryData: ', countryData)
 console.log('countryCurrencySymbol: ', countryCurrencySymbol)
 
 export const CurrencyExchange = () => {
-
-  const [age, setAge] = useState('');
+  const [currency, setCurrency] = useState('');
 
   const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
+    setCurrency(event.target.value as string);
+  };
+
+  const renderCurrency = (__currency: string) => {
+    const code = __currency.toLowerCase();
+    const name = countryCurrencySymbol[__currency];
+
+    return (
+      <MenuItem key={code} value={name}>
+        <div style={{ display: 'flex', alignItems: 'center'}}>
+          <div className={`currency-flag currency-flag-xl currency-flag-${code}`}></div>
+          <p>{name}</p>
+        </div>
+      </MenuItem>
+    );
   };
 
   return (
     <>
       <h2>Currency exchange</h2>
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Age</InputLabel>
-        <Select
-          labelId="demo-simple-select-label"
-          id="demo-simple-select"
-          value={age}
-          label="Age"
-          onChange={handleChange}
-        >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
-        </Select>
-      </FormControl>
+      <FormHelperText>From</FormHelperText>
+
+      <Select
+        value={currency}
+        onChange={handleChange}
+        displayEmpty
+      >
+        <MenuItem value="">
+          <em>Select currency</em>
+        </MenuItem>
+        {Object.keys(countryCurrencySymbol).map(currencySymbol => renderCurrency(currencySymbol)) }
+      </Select>
     </>
   )
 }

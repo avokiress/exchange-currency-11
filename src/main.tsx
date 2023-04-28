@@ -10,6 +10,7 @@ import '@fontsource/roboto/700.css';
 
 import './normalize.css'
 import './index.css'
+import './currency-flags.css'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <Provider store={store}>
