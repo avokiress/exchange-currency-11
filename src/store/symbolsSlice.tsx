@@ -45,7 +45,7 @@ const symbolsSlice = createSlice({
   name: 'symbols',
   initialState,
   reducers: {
-    getSymbols: (state: SymbolsState, action: PayloadAction<Returned>) => {
+    fetchSymbols: (state: SymbolsState, action: PayloadAction<Returned>) => {
       console.log('#### getSymbols state: ', state)
       console.log('#### getSymbols action: ', action)
       state.symbols = action.payload;
