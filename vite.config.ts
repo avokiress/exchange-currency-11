@@ -13,6 +13,7 @@ export default defineConfig({
       context: path.resolve(__dirname, 'src/context/'),
       layouts: path.resolve(__dirname, 'src/layouts/'),
       store: path.resolve(__dirname, 'src/store/'),
+      css: path.resolve(__dirname, 'src/css/'),
     },
   },
   server: {

@@ -8,8 +8,8 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-import './normalize.css'
-import './index.css'
+import 'css/normalize.css'
+import 'css/index.css'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <Provider store={store}>
