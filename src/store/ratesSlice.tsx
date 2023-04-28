@@ -28,10 +28,11 @@ const requestOptions = {
 export const fetchRates = createAsyncThunk(
   'rates/fetchRates',
   async () => {
-    const response = await fetch('https://api.apilayer.com/exchangerates_data/symbols', requestOptions)
-    return (await response.json()) as Returned;
-  }
-)
+    const res = await fetch('https://api.apilayer.com/exchangerates_data/symbols', requestOptions).then(
+      (data) => data.json()
+    )
+    return res;
+  })
 
 const ratesSlice = createSlice({
   name: 'rates',
