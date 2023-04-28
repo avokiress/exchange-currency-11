@@ -46,8 +46,9 @@ export const DropdownCurrency = ({ title, field, currency = '' }: DropdownData) 
     <>
       <FormHelperText>{title}</FormHelperText>
 
-      <FormControl sx={{ width: '500px' }}>
+      <FormControl>
         <Select
+          sx={{ width: '500px', padding: '0' }}
           displayEmpty
           name={field}
           value={currencyState}
