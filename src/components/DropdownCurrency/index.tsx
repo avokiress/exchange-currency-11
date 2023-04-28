@@ -44,7 +44,7 @@ export const DropdownCurrency = ({ title, field, currency = '' }: DropdownData) 
 
   return (
     <>
-      <FormHelperText>{title}</FormHelperText>
+      <FormHelperText sx={{ fontSize: '16px' }}>{title}</FormHelperText>
 
       <FormControl>
         <Select
