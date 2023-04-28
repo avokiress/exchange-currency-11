@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import ratesReducer from './ratesSlice';
+import symbolsReducer from './symbolsSlice';
 
 const store = configureStore({
   reducer: {
-    rates: ratesReducer,
+    symbols: symbolsReducer,
   }
 });
 

@@ -1,24 +1,24 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { getRates } from 'store/ratesSlice';
+import { getSymbols } from 'store/symbolsSlice';
 import { CurrencyExchange } from 'components/CurrencyExchange'
 
 export const Main = () => {
   const dispatch = useDispatch()
-  const { rates, loading } = useSelector((state)=> state.rates)
+  const { symbols, loading } = useSelector((state)=> state.symbols)
 
   useEffect(() => {
-    dispatch(getRates())
+    dispatch(getSymbols())
   }, [])
 
-  console.log('rates: ', rates);
+  console.log('symbols: ', symbols);
   if (loading) return <p>Loading...</p>
   
 
   return (
     <>
-      <h1>Rates</h1>
+      <h1>Symbols</h1>
       <CurrencyExchange />
     </>
   )
