@@ -24,16 +24,22 @@ const requestOptions = {
   headers: myHeaders,
 } as RequestInit;
 
+console.log('requestOptions: ', requestOptions)
+
 
 export const fetchRates = createAsyncThunk(
   'rates/fetchRates',
   async () => {
-    const res = await fetch('https://api.apilayer.com/exchangerates_data/symbols', requestOptions).then(
-      (data) => data.json()
-    )
-    console.log('#### res: ', res);
-    return res;
-  })
+    // Fetch the backend endpoint:
+    const response = await fetch('https://api.apilayer.com/exchangerates_data/symbols', requestOptions);
+
+    // Get the JSON from the response:
+    const data = await response.json();
+
+    // Return result:
+    return data;
+  }
+)
 
 const ratesSlice = createSlice({
   name: 'rates',
