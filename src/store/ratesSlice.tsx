@@ -31,6 +31,7 @@ export const fetchRates = createAsyncThunk(
     const res = await fetch('https://api.apilayer.com/exchangerates_data/symbols', requestOptions).then(
       (data) => data.json()
     )
+    console.log('#### res: ', res);
     return res;
   })
 
@@ -45,27 +46,17 @@ const ratesSlice = createSlice({
     }
   },
 
-  extraReducers: (builder) => {
-    builder.addCase(fetchRates.pending, (state, action) => {
-      console.log('#### builder state: ', state)
-      console.log('#### builder action: ', action)
-    })
-
-    builder.addCase(fetchRates.fulfilled, (state, { payload }) => {
-      console.log('#### builder payload: ', payload)
-      console.log('#### builder state: ', state)
-      state.rates.push(...payload);
-    })
-    builder.addCase(fetchRates.rejected, (state, action) => {
-      console.log('#### builder state: ', state)
-      console.log('#### builder action: ', action)
-
-      if (action.payload) {
-        state.error = action.payload.errorMessage
-      } else {
-        state.error = action.error
-      }
-    })
+  extraReducers: {
+    [fetchRates.pending]: (state) => {
+      state.loading = true
+    },
+    [fetchRates.fulfilled]: (state, { payload }) => {
+      state.loading = false
+      state.rates = payload
+    },
+    [fetchRates.rejected]: (state) => {
+      state.loading = false
+    },
   },
 })
 
