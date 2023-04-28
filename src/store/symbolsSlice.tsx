@@ -11,6 +11,7 @@ interface Returned {
   symbols: object
 }
 
+
 const initialState = {
   symbols: {},
   loading: false,
@@ -24,8 +25,6 @@ const requestOptions = {
   method: 'GET',
   headers: myHeaders,
 } as RequestInit;
-
-console.log('requestOptions: ', requestOptions)
 
 
 export const fetchSymbols = createAsyncThunk<Returned>(
@@ -46,7 +45,7 @@ const symbolsSlice = createSlice({
   name: 'symbols',
   initialState,
   reducers: {
-    getSymbols(state: SymbolsState, action: PayloadAction<Returned>) {
+    getSymbols: (state: SymbolsState, action: PayloadAction<Returned>) => {
       console.log('#### getSymbols state: ', state)
       console.log('#### getSymbols action: ', action)
       state.symbols = action.payload;
@@ -59,7 +58,7 @@ const symbolsSlice = createSlice({
     },
     [fetchSymbols.fulfilled]: (state, { payload }) => {
       state.loading = false
-			state.symbols = payload
+      state.symbols = payload
     },
     [fetchSymbols.rejected]: (state) => {
       state.loading = false
