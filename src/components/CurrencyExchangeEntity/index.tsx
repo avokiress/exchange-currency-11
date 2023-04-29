@@ -123,6 +123,7 @@ export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }
               onChange={handleConvert}
             />
           </Box>
+
           <Box sx={{ margin: '12px 10px 0' }}>
             <Button>
               {isFavorites
@@ -149,11 +150,11 @@ export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }
           }
         </Box>
 
-        <Box sx={{ padding: '20px 0' }}>
-          {!isLoading && data &&
+        {!isLoading && data &&
+          <Box sx={{ padding: '20px 0' }}>
             <Chart startDate={new Date('2023-01-01')} endDate={new Date()} base={dataConverter.from} symbols={[dataConverter.to]} />
-          }
-        </Box>
+          </Box>
+        }
 
         {!isLoading && error &&
           <Alert severity="error">{error}</Alert>
