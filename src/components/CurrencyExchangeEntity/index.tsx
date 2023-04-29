@@ -70,7 +70,6 @@ export const CurrencyExchangeEntity = () => {
 
   const onChangeConvert = () => {
     const { from, to } = dataConverter;
-    console.log('>>>>> dataConverter: ', dataConverter);
     setDataConverter(__prevData => ({
       ...__prevData,
       from: to,
