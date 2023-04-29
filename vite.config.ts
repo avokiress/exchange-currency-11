@@ -16,6 +16,7 @@ export default defineConfig({
       service: path.resolve(__dirname, 'src/service/'),
       utils: path.resolve(__dirname, 'src/utils/'),
       css: path.resolve(__dirname, 'src/css/'),
+      config: path.resolve(__dirname, 'src/config.ts'),
     },
   },
   server: {

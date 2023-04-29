@@ -10,7 +10,7 @@ export const Main = () => {
   const { symbols, loading } = useSelector((state) => state.symbols)
 
   useEffect(() => {
-    dispatch(fetchSymbols())
+    // dispatch(fetchSymbols())
   }, [])
 
   console.log('symbols: ', symbols);
@@ -20,7 +20,7 @@ export const Main = () => {
 
   return (
     <>
-      <h1>Symbols</h1>
+      <h1>Converter</h1>
       <CurrencyExchange />
       <Chart startDate={new Date('2023-01-01')} endDate={new Date()} base="RUB" symbols={["EUR", "USD"]} />
     </>
