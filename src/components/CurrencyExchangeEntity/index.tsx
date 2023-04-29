@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import currencyToSymbolMap from 'currency-symbol-map'
 
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
@@ -73,14 +74,14 @@ export const CurrencyExchangeEntity = () => {
     }))
   }
 
-  console.log('dataConverter: ', dataConverter);
+  const prefix = currencyToSymbolMap(dataConverter.from);
 
   return (
     <>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
 
         <Box sx={{ marginRight: '10px' }}>
-          <AmountInput name="amount" title="Amount" prefix="$" onChange={handleConvert} />
+          <AmountInput name="amount" title="Amount" prefix={prefix} onChange={handleConvert} />
         </Box>
 
         <Box>
@@ -118,6 +119,7 @@ export const CurrencyExchangeEntity = () => {
         {isLoading &&
           <CircularProgress />
         }
+
         {!isLoading && data &&
           <>
             <h3>Exchange rate for {data.date}</h3>
@@ -125,6 +127,7 @@ export const CurrencyExchangeEntity = () => {
             <p>1 {dataConverter.to} = {data.info.rate} {dataConverter.from}</p>
           </>
         }
+
         {!isLoading && error &&
           <Alert severity="error">{error}</Alert>
         }

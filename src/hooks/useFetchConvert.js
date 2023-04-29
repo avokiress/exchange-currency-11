@@ -1,21 +1,16 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
+import { apiKey, urlConvert } from 'config';
 
-
-const url = 'https://api.apilayer.com/exchangerates_data/convert';
 export const useFetchConvert = () => {
 
   const [isLoading, setLoading] = useState(false);
   const [data, setData] = useState();
   const [error, setError] = useState();
 
-  // useEffect(() => {
-  //   fetchData(options);
-  // }, []);
 
-  
   const fetchData = useCallback((options = {}) => {
     var myHeaders = new Headers();
-    myHeaders.append("apikey", "Hz7p5ZyXr7AqxDxM9T0Q9ENxMirSqpuX");
+    myHeaders.append("apikey", apiKey);
 
     var requestOptions = {
       method: 'GET',
@@ -23,7 +18,7 @@ export const useFetchConvert = () => {
       headers: myHeaders
     };
 
-    const newUrl = url + '?' + (new URLSearchParams(options)).toString();
+    const newUrl = urlConvert + '?' + (new URLSearchParams(options)).toString();
 
     setLoading(true);
     fetch(newUrl, requestOptions)

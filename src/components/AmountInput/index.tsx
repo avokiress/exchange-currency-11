@@ -24,7 +24,7 @@ export const AmountInput = ({ title, prefix = '', name, onChange }: AmountInputD
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value }: DataHandler = event.target;
-    const parseValue = value.slice(1)
+    const parseValue = value.replace(/[^0-9,\s]/g, "");
 
     onChange({ [name]: parseValue });
     setAmount(parseValue);
@@ -39,7 +39,6 @@ export const AmountInput = ({ title, prefix = '', name, onChange }: AmountInputD
       <NumericFormat
         style={{ border: '1px solid #ced4da', padding: '10px 12px', borderRadius: '4px', height: '80px' }}
         onChange={handleChange}
-        thousandSeparator
         valueIsNumericString
         value={amount}
         prefix={prefix}
