@@ -12,9 +12,10 @@ import StarIcon from '@mui/icons-material/Star';
 
 import { useFetchConvert } from 'hooks/useFetchConvert'
 
+import { Chart } from "components/Chart"
 import { AmountInput } from 'components/AmountInput'
 import { DropdownCurrency } from 'components/DropdownCurrency'
-import { Chart } from "components/Chart"
+import { ShortcutCurrency } from 'components/ShortcutCurrency'
 
 import countryCurrencySymbol from 'constants/countryCurrencySymbol';
 interface DataHandler {
@@ -41,6 +42,8 @@ interface DataFetch {
   fetchData(data: DataConverter): string
 }
 
+const SHORTCUTS_FROM = ['USD', 'EUR', 'BTC', 'GBP']
+const SHORTCUTS_TO = ['RUB', 'UAH', 'GBP']
 
 const isValidData = (data: DataConverter) => {
   let valid = true;
@@ -89,7 +92,22 @@ export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }
     }))
   }
 
+  const renderShortcuts = (__shortcuts: string[], field: string) => {
+    return __shortcuts.map((shortcut: string) => (
+      <ShortcutCurrency
+        key={`shortcut_from_${shortcut}`}
+        value={shortcut}
+        name={field}
+        onChange={handleConvert}
+        checked={dataConverter[field] === shortcut}
+      />
+    )
+    )
+  }
+
   const prefix = currencyToSymbolMap(dataConverter.from);
+
+  console.log('dataConverter: ', dataConverter);
 
   return (
     <>
@@ -107,6 +125,9 @@ export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }
               currency={dataConverter.from}
               onChange={handleConvert}
             />
+            <Box sx={{ margin: '10px 0 0' }}>
+              {renderShortcuts(SHORTCUTS_FROM, 'from')}
+            </Box>
           </Box>
 
           <Box sx={{ margin: '12px 10px 0' }}>
@@ -122,6 +143,10 @@ export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }
               currency={dataConverter.to}
               onChange={handleConvert}
             />
+            <Box sx={{ margin: '10px 0 0' }}>
+              {renderShortcuts(SHORTCUTS_TO, 'to')}
+            </Box>
+
           </Box>
 
           <Box sx={{ margin: '12px 10px 0' }}>
