@@ -23,7 +23,7 @@ interface DataHandler {
 }
 
 interface PropsData {
-  isFavorites: boolean
+  favorites: boolean
   from: string
   to: string
 }
@@ -42,36 +42,43 @@ interface DataFetch {
 }
 
 
-export const CurrencyExchangeEntity = ({ from = '', to = '', isFavorites = false }: PropsData) => {
+const isValidData = (data: DataConverter) => {
+  let valid = true;
+  for (const field in data) {
+    if (data[field].length === 0) {
+      valid = false;
+    }
+  }
+  return valid;
+};
+
+
+export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }: PropsData) => {
   const initialData = useRef({
     amount: '',
     from,
     to,
   });
 
+  const [isFavorites, setFavorites] = useState<boolean>(favorites);
   const [dataConverter, setDataConverter] = useState<DataConverter>(initialData.current)
   const { data, isLoading, error, fetchData } = useFetchConvert<DataFetch>()
 
-  const isValidData = () => {
-    let valid = true;
-    for (const field in dataConverter) {
-      if (dataConverter[field].length === 0) {
-        valid = false;
-      }
-    }
-    return valid;
-  };
 
   useEffect(() => {
     console.log('>>>>> isValidData dataConverter: ', dataConverter);
-    if (isValidData()) {
+    if (isValidData(dataConverter)) {
       // fetchData(dataConverter);
     }
   }, [dataConverter])
-
+  
 
   const handleConvert = (data: DataHandler) => {
     setDataConverter(__prevData => ({ ...__prevData, ...data }))
+  }
+
+  const handleFavorites = ():void => {
+    setFavorites(__prevData => !__prevData)
   }
 
   const onChangeConvert = () => {
@@ -121,9 +128,9 @@ export const CurrencyExchangeEntity = ({ from = '', to = '', isFavorites = false
             <Button>
               {isFavorites
                 ?
-                <StarIcon sx={{ fontSize: "40px" }} />
+                  <StarIcon sx={{ fontSize: "40px" }} onClick={handleFavorites} />
                 :
-                <StarBorderIcon sx={{ fontSize: "40px" }} />
+                  <StarBorderIcon sx={{ fontSize: "40px" }} onClick={handleFavorites} />
               }
             </Button>
           </Box>
