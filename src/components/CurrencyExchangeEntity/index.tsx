@@ -70,13 +70,13 @@ export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }
       // fetchData(dataConverter);
     }
   }, [dataConverter])
-  
+
 
   const handleConvert = (data: DataHandler) => {
     setDataConverter(__prevData => ({ ...__prevData, ...data }))
   }
 
-  const handleFavorites = ():void => {
+  const handleFavorites = (): void => {
     setFavorites(__prevData => !__prevData)
   }
 
@@ -127,9 +127,9 @@ export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }
             <Button>
               {isFavorites
                 ?
-                  <StarIcon sx={{ fontSize: "40px" }} onClick={handleFavorites} />
+                <StarIcon sx={{ fontSize: "40px" }} onClick={handleFavorites} />
                 :
-                  <StarBorderIcon sx={{ fontSize: "40px" }} onClick={handleFavorites} />
+                <StarBorderIcon sx={{ fontSize: "40px" }} onClick={handleFavorites} />
               }
             </Button>
           </Box>
@@ -147,15 +147,17 @@ export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }
               <p>1 {dataConverter.to} = {data.info?.rate} {dataConverter.from}</p>
             </>
           }
+        </Box>
 
+        <Box sx={{ padding: '20px 0' }}>
           {!isLoading && data &&
             <Chart startDate={new Date('2023-01-01')} endDate={new Date()} base={dataConverter.from} symbols={[dataConverter.to]} />
           }
-
-          {!isLoading && error &&
-            <Alert severity="error">{error}</Alert>
-          }
         </Box>
+
+        {!isLoading && error &&
+          <Alert severity="error">{error}</Alert>
+        }
       </Box>
 
     </>

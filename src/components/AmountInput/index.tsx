@@ -1,5 +1,6 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useThrottle } from 'hooks/useThrottle';
 
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
@@ -20,12 +21,16 @@ interface AmountInputData {
 
 export const AmountInput = ({ title, prefix = '', name, onChange }: AmountInputData) => {
   const [amount, setAmount] = useState<string>('')
+  const throttledValue = useThrottle(amount)
+
+  useEffect(() => {
+    onChange({ [name]: throttledValue });
+  }, [throttledValue])
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value }: DataHandler = event.target;
+    const { value }: DataHandler = event.target;
     const parseValue = value.replace(/[^0-9,\s]/g, "");
 
-    onChange({ [name]: parseValue });
     setAmount(parseValue);
   };
 
