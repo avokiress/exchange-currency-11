@@ -19,7 +19,7 @@ export const Main = () => {
 
   return (
     <>
-      <h1>Symbols</h1>
+      <h1>Converter</h1>
       <CurrencyExchange />
     </>
   )

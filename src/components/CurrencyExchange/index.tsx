@@ -30,7 +30,7 @@ export const CurrencyExchange = () => {
         endIcon={<AddIcon />}
         onClick={() => setCountConverter(__prevState => [...__prevState, CurrencyExchangeEntity])}
       >
-        Add converter
+        Add new converter
       </Button >
     </>
   )
