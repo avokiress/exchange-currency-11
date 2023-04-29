@@ -6,18 +6,26 @@ import MenuItem from '@mui/material/MenuItem';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FormHelperText from '@mui/material/FormHelperText';
 import Box from '@mui/material/Box';
-import FormControl from '@mui/material/FormControl';
+
+
+interface DataHandler {
+  name: string
+  value: string
+}
 interface DropdownData {
   title: string
   field: string
   currency: string
+  onChange(data: object): void
 }
 
-export const DropdownCurrency = ({ title, field, currency = '' }: DropdownData) => {
+export const DropdownCurrency = ({ title, field, currency = '', onChange }: DropdownData) => {
   const [currencyState, setCurrencyState] = useState(currency);
 
   const handleChange = (event: SelectChangeEvent) => {
-    setCurrencyState(event.target.value as string);
+    const { name, value }: DataHandler = event.target
+    onChange({ [name]: value })
+    setCurrencyState(value);
   };
 
   const renderCurrency = (__currency: string) => {
@@ -45,21 +53,19 @@ export const DropdownCurrency = ({ title, field, currency = '' }: DropdownData) 
     <>
       <FormHelperText sx={{ fontSize: '16px' }}>{title}</FormHelperText>
 
-      <FormControl>
-        <Select
-          sx={{ width: '500px', padding: '0' }}
-          displayEmpty
-          name={field}
-          value={currencyState}
-          onChange={handleChange}
-          MenuProps={{ PaperProps: { sx: { maxHeight: '400px' } } }}
-          renderValue={() => renderCurrency(currencyState)}
-        >
+      <Select
+        sx={{ width: '500px', padding: '0' }}
+        displayEmpty
+        name={field}
+        value={currencyState}
+        onChange={handleChange}
+        MenuProps={{ PaperProps: { sx: { maxHeight: '400px' } } }}
+        renderValue={() => renderCurrency(currencyState)}
+      >
 
-          {Object.keys(countryCurrencySymbol).map(currencySymbol => renderCurrency(currencySymbol))}
+        {Object.keys(countryCurrencySymbol).map(currencySymbol => renderCurrency(currencySymbol))}
 
-        </Select>
-      </FormControl>
+      </Select>
     </>
   )
 }
