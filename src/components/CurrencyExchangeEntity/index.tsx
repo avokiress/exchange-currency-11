@@ -22,6 +22,12 @@ interface DataHandler {
   value: string
 }
 
+interface PropsData {
+  isFavorites: boolean
+  from: string
+  to: string
+}
+
 interface DataConverter {
   amount: string
   from: string
@@ -36,11 +42,11 @@ interface DataFetch {
 }
 
 
-export const CurrencyExchangeEntity = () => {
+export const CurrencyExchangeEntity = ({ from = '', to = '', isFavorites = false }: PropsData) => {
   const initialData = useRef({
     amount: '',
-    from: '',
-    to: '',
+    from,
+    to,
   });
 
   const [dataConverter, setDataConverter] = useState<DataConverter>(initialData.current)
@@ -111,10 +117,14 @@ export const CurrencyExchangeEntity = () => {
               onChange={handleConvert}
             />
           </Box>
-          <Box>
+          <Box sx={{ margin: '12px 10px 0' }}>
             <Button>
-              <StarIcon fontSize="large" />
-              <StarBorderIcon fontSize="large" />
+              {isFavorites
+                ?
+                <StarIcon sx={{ fontSize: "40px" }} />
+                :
+                <StarBorderIcon sx={{ fontSize: "40px" }} />
+              }
             </Button>
           </Box>
         </Box>
