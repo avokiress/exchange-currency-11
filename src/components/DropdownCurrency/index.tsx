@@ -20,7 +20,13 @@ interface CountryType {
   label: string;
 }
 
-const OPTIONS: CountryType[] = Object.keys(countryCurrencySymbol).map(key => ({ code: key, label: countryCurrencySymbol[key] }))
+const sortableOptions = Object.entries(countryCurrencySymbol).sort((a, b) => {
+  if (b[1] > a[1]) return -1;
+  else if (b[1] < a[1]) return 1;
+});
+
+const options: CountryType[] = sortableOptions.map(option => ({ code: option[0], label: option[1] }))
+
 
 export const DropdownCurrency = ({ title, field, currency = '', onChange }: DropdownData) => {
   const [currencyState, setCurrencyState] = useState<string | null>(currency);
@@ -60,15 +66,14 @@ export const DropdownCurrency = ({ title, field, currency = '', onChange }: Drop
   return (
     <>
       <Autocomplete
-        sx={{ width: 450 }}
-        style={{ height: '70px' }}
-        options={OPTIONS}
+        sx={{ width: 450, "& .MuiInputBase-root": { height: "73px" } }}
+        options={options}
         autoHighlight
         selectOnFocus
         getOptionLabel={(option) => option.code ?? currencyState}
         value={currencyState}
         renderOption={(props, option) => (
-          <Box component="li" sx={{ height: '70px' }} {...props} key={`${title}_${option.code}`}>
+          <Box component="li" {...props} key={`${title}_${option.code}`}>
             {renderCurrency(option.code)}
           </Box>
         )}
@@ -76,8 +81,6 @@ export const DropdownCurrency = ({ title, field, currency = '', onChange }: Drop
         renderInput={(params) => (
           <TextField
             {...params}
-            sx={{ height: '70px' }}
-            style={{ height: '70px' }}
             label={title}
             placeholder={PLACEHOLDER}
             InputProps={{

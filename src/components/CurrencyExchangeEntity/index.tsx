@@ -39,8 +39,8 @@ interface DataFetch {
 export const CurrencyExchangeEntity = () => {
   const initialData = useRef({
     amount: '',
-    from: 'USD',
-    to: 'RUB',
+    from: '',
+    to: '',
   });
 
   const [dataConverter, setDataConverter] = useState<DataConverter>(initialData.current)
@@ -97,7 +97,7 @@ export const CurrencyExchangeEntity = () => {
             />
           </Box>
 
-          <Box sx={{ margin: '25px 10px 0' }}>
+          <Box sx={{ margin: '12px 10px 0' }}>
             <Button onClick={onChangeConvert}>
               <MultipleStopIcon sx={{ fontSize: 40 }} />
             </Button>
