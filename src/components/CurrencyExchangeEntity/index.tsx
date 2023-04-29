@@ -57,8 +57,8 @@ export const CurrencyExchangeEntity = () => {
   };
 
   useEffect(() => {
+    console.log('>>>>> isValidData dataConverter: ', dataConverter);
     if (isValidData()) {
-      console.log('>>>>> dataConverter: ', dataConverter);
       // fetchData(dataConverter);
     }
   }, [dataConverter])
@@ -70,6 +70,7 @@ export const CurrencyExchangeEntity = () => {
 
   const onChangeConvert = () => {
     const { from, to } = dataConverter;
+    console.log('>>>>> dataConverter: ', dataConverter);
     setDataConverter(__prevData => ({
       ...__prevData,
       from: to,

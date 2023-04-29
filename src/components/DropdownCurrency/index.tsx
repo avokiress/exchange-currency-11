@@ -29,6 +29,10 @@ export const DropdownCurrency = ({ title, field, currency = '', onChange }: Drop
     setCurrencyState(currency)
   }, [currency])
 
+  useEffect(() => {
+    onChange({ [field]: currencyState })
+  }, [currencyState])
+
 
   const handleChange = (data: CountryType | null) => {
     if (!data) return setCurrencyState('');
