@@ -15,10 +15,8 @@ export const CurrencyExchange = () => {
       <h2>Currency exchange</h2>
       {countConverter.map((Component, index) => {
         return (
-          <Box sx={{padding: '10px 0'}}>
-            <div key={index}>
-              <Component />
-            </div>
+          <Box sx={{ padding: '10px 0' }} key={index}>
+            <Component />
             <Divider />
           </Box>
         )
