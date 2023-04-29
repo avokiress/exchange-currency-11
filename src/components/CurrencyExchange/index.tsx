@@ -64,6 +64,17 @@ export const CurrencyExchange = () => {
     setDataConverter(__prevData => ({ ...__prevData, ...data }))
   }
 
+  const onChangeConvert = () => {
+    const { from, to } = dataConverter;
+    setDataConverter(__prevData => ({
+      ...__prevData,
+      from: to,
+      to: from,
+    }))
+  }
+
+  console.log('dataConverter: ', dataConverter);
+
   return (
     <>
       <h2>Currency exchange</h2>
@@ -77,20 +88,22 @@ export const CurrencyExchange = () => {
           <DropdownCurrency
             title="From"
             field="from"
-            currency="USD"
+            currency={dataConverter.from}
             onChange={handleConvert}
           />
         </Box>
 
-        <Box>
-          <MultipleStopIcon sx={{ fontSize: 40, margin: '25px 10px 0' }} />
+        <Box sx={{ margin: '25px 10px 0' }}>
+          <Button onClick={onChangeConvert}>
+            <MultipleStopIcon sx={{ fontSize: 40 }} />
+          </Button>
         </Box>
 
         <Box>
           <DropdownCurrency
             title="To"
             field="to"
-            currency="EUR"
+            currency={dataConverter.to}
             onChange={handleConvert}
           />
         </Box>

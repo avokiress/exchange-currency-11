@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import countryCurrencySymbol from 'constants/countryCurrencySymbol';
 
 import MenuItem from '@mui/material/MenuItem';
@@ -21,6 +21,10 @@ interface DropdownData {
 
 export const DropdownCurrency = ({ title, field, currency = '', onChange }: DropdownData) => {
   const [currencyState, setCurrencyState] = useState(currency);
+
+  useEffect(() => {
+    setCurrencyState(currency)
+  }, [currency])
 
   const handleChange = (event: SelectChangeEvent) => {
     const { name, value }: DataHandler = event.target
