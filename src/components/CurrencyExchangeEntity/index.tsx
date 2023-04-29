@@ -10,9 +10,11 @@ import MultipleStopIcon from '@mui/icons-material/MultipleStop';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 
-import { AmountInput } from 'components/AmountInput'
 import { useFetchConvert } from 'hooks/useFetchConvert'
+
+import { AmountInput } from 'components/AmountInput'
 import { DropdownCurrency } from 'components/DropdownCurrency'
+import { Chart } from "components/Chart"
 
 import countryCurrencySymbol from 'constants/countryCurrencySymbol';
 interface DataHandler {
@@ -56,7 +58,8 @@ export const CurrencyExchangeEntity = () => {
 
   useEffect(() => {
     if (isValidData()) {
-      fetchData(dataConverter);
+      console.log('dataConverter: ', dataConverter);
+      // fetchData(dataConverter);
     }
   }, [dataConverter])
 
@@ -78,59 +81,65 @@ export const CurrencyExchangeEntity = () => {
 
   return (
     <>
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Box sx={{ alignItems: 'center', border: '1px solid #e0e1e5', padding: '20px', borderRadius: '8px' }}>
 
-        <Box sx={{ marginRight: '10px' }}>
-          <AmountInput name="amount" title="Amount" prefix={prefix} onChange={handleConvert} />
+        <Box sx={{ display: 'flex' }}>
+          <Box sx={{ marginRight: '10px' }}>
+            <AmountInput name="amount" title="Amount" prefix={prefix} onChange={handleConvert} />
+          </Box>
+
+          <Box>
+            <DropdownCurrency
+              title="From"
+              field="from"
+              currency={dataConverter.from}
+              onChange={handleConvert}
+            />
+          </Box>
+
+          <Box sx={{ margin: '25px 10px 0' }}>
+            <Button onClick={onChangeConvert}>
+              <MultipleStopIcon sx={{ fontSize: 40 }} />
+            </Button>
+          </Box>
+
+          <Box>
+            <DropdownCurrency
+              title="To"
+              field="to"
+              currency={dataConverter.to}
+              onChange={handleConvert}
+            />
+          </Box>
+          <Box>
+            <Button>
+              <StarIcon fontSize="large" />
+              <StarBorderIcon fontSize="large" />
+            </Button>
+          </Box>
         </Box>
 
-        <Box>
-          <DropdownCurrency
-            title="From"
-            field="from"
-            currency={dataConverter.from}
-            onChange={handleConvert}
-          />
+        <Box sx={{ padding: '20px 0' }}>
+          {isLoading &&
+            <CircularProgress />
+          }
+
+          {!isLoading && data &&
+            <>
+              <h3>Exchange rate for {data.date}</h3>
+              <p>{dataConverter.amount} {countryCurrencySymbol[dataConverter.from]} = {data.result} {dataConverter.to}</p>
+              <p>1 {dataConverter.to} = {data.info?.rate} {dataConverter.from}</p>
+            </>
+          }
+
+          {!isLoading && data &&
+            <Chart startDate={new Date('2023-01-01')} endDate={new Date()} base={dataConverter.from} symbols={[dataConverter.to]} />
+          }
+
+          {!isLoading && error &&
+            <Alert severity="error">{error}</Alert>
+          }
         </Box>
-
-        <Box sx={{ margin: '25px 10px 0' }}>
-          <Button onClick={onChangeConvert}>
-            <MultipleStopIcon sx={{ fontSize: 40 }} />
-          </Button>
-        </Box>
-
-        <Box>
-          <DropdownCurrency
-            title="To"
-            field="to"
-            currency={dataConverter.to}
-            onChange={handleConvert}
-          />
-        </Box>
-        <Box>
-          <Button>
-            <StarIcon fontSize="large" />
-            <StarBorderIcon fontSize="large" />
-          </Button>
-        </Box>
-      </Box>
-
-      <Box sx={{ padding: '20px 0' }}>
-        {isLoading &&
-          <CircularProgress />
-        }
-
-        {!isLoading && data &&
-          <>
-            <h3>Exchange rate for {data.date}</h3>
-            <p>{dataConverter.amount} {countryCurrencySymbol[dataConverter.from]} = {data.result} {dataConverter.to}</p>
-            <p>1 {dataConverter.to} = {data.info?.rate} {dataConverter.from}</p>
-          </>
-        }
-
-        {!isLoading && error &&
-          <Alert severity="error">{error}</Alert>
-        }
       </Box>
 
     </>

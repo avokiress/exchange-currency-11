@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
-import { apiKey, urlConvert } from 'config';
+import { urlConvert } from 'config';
+const accessKey = import.meta.env.VITE_APILAYER_ACCESS_KEY;
 
 export const useFetchConvert = () => {
 
@@ -10,7 +11,7 @@ export const useFetchConvert = () => {
 
   const fetchData = useCallback((options = {}) => {
     var myHeaders = new Headers();
-    myHeaders.append("apikey", apiKey);
+    myHeaders.append("apikey", accessKey);
 
     var requestOptions = {
       method: 'GET',

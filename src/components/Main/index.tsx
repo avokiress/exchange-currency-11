@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { fetchSymbols } from 'store/symbolsSlice';
 import { CurrencyExchange } from 'components/CurrencyExchange'
-import { Chart } from "../Chart"
+import { Chart } from "components/Chart"
 
 export const Main = () => {
   const dispatch = useDispatch()
@@ -13,8 +13,6 @@ export const Main = () => {
     // dispatch(fetchSymbols())
   }, [])
 
-  console.log('symbols: ', symbols);
-  console.log('loading: ', loading);
   if (loading) return <p>Loading...</p>
 
 
@@ -22,7 +20,7 @@ export const Main = () => {
     <>
       <h1>Converter</h1>
       <CurrencyExchange />
-      <Chart startDate={new Date('2023-01-01')} endDate={new Date()} base="RUB" symbols={["EUR", "USD"]} />
+      {/* <Chart startDate={new Date('2023-01-01')} endDate={new Date()} base="RUB" symbols={["EUR", "USD"]} /> */}
     </>
   )
 }
