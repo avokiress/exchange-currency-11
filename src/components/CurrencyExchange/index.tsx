@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import Box from '@mui/material/Box';
 import MultipleStopIcon from '@mui/icons-material/MultipleStop';
@@ -6,12 +6,27 @@ import MultipleStopIcon from '@mui/icons-material/MultipleStop';
 import { DropdownCurrency } from 'components/DropdownCurrency'
 import { AmountInput } from 'components/AmountInput'
 
+interface DataHandler {
+  name: string
+  value: string
+}
+
+interface DataConverter {
+  amount?: string
+  from?: string
+  to?: string
+}
 
 
 export const CurrencyExchange = () => {
+  const [dataConverter, setDataConverter] = useState<DataConverter>()
 
-  const handleConvert = (data: any) => {
-    console.log('data: ', data);
+  useEffect(() => {
+    console.log('dataConverter: ', dataConverter);
+  }, [dataConverter])
+
+  const handleConvert = (data: DataHandler) => {
+    setDataConverter(__prevData => ({ ...__prevData, ...data }))
   }
 
   return (
