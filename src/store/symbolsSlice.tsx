@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { apilayerService } from "../service";
 
 interface SymbolsState {
   symbols: object
@@ -18,27 +19,9 @@ const initialState = {
   error: ''
 } as unknown as SymbolsState;
 
-const myHeaders = new Headers();
-myHeaders.append("apikey", "Hz7p5ZyXr7AqxDxM9T0Q9ENxMirSqpuX");
-
-const requestOptions = {
-  method: 'GET',
-  headers: myHeaders,
-} as RequestInit;
-
-
 export const fetchSymbols = createAsyncThunk<Returned>(
   'symbols/fetchSymbols',
-  async () => {
-    // Fetch the backend endpoint:
-    const response = await fetch('https://api.apilayer.com/exchangerates_data/symbols', requestOptions);
-
-    // Get the JSON from the response:
-    const data = await response.json();
-
-    // Return result:
-    return data;
-  }
+  apilayerService.getSymbols
 )
 
 const symbolsSlice = createSlice({
