@@ -124,7 +124,7 @@ export const CurrencyExchangeEntity = () => {
           <>
             <h3>Exchange rate for {data.date}</h3>
             <p>{dataConverter.amount} {countryCurrencySymbol[dataConverter.from]} = {data.result} {dataConverter.to}</p>
-            <p>1 {dataConverter.to} = {data.info.rate} {dataConverter.from}</p>
+            <p>1 {dataConverter.to} = {data.info?.rate} {dataConverter.from}</p>
           </>
         }
 

@@ -1,3 +1,3 @@
-import apilayerService from "./apilayerService"
+import apilayerService from "./fakeApilayerService"
 
 export { apilayerService }
