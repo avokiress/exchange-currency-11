@@ -1,11 +1,10 @@
 
 import React, { useState } from 'react';
-import { NumericFormat } from 'react-number-format';
 
 import InputLabel from '@mui/material/InputLabel';
-
-
-const DEFAULT_AMOUNT = 1;
+import FormControl from '@mui/material/FormControl';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import InputAdornment from '@mui/material/InputAdornment';
 
 interface DataHandler {
   name: string
@@ -20,7 +19,7 @@ interface AmountInputData {
 }
 
 export const AmountInput = ({ title, prefix = '', name, onChange }: AmountInputData) => {
-  const [amount, setAmount] = useState<string>(DEFAULT_AMOUNT.toFixed(2))
+  const [amount, setAmount] = useState<string>('')
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value }: DataHandler = event.target;
@@ -32,18 +31,20 @@ export const AmountInput = ({ title, prefix = '', name, onChange }: AmountInputD
 
   return (
     <>
-      <InputLabel shrink style={{ fontSize: '20px' }}>
-        {title}
-      </InputLabel>
-
-      <NumericFormat
-        style={{ border: '1px solid #ced4da', padding: '10px 12px', borderRadius: '4px', height: '80px' }}
-        onChange={handleChange}
-        valueIsNumericString
-        value={amount}
-        prefix={prefix}
-        name={name}
-      />
+      <FormControl fullWidth>
+        <InputLabel htmlFor="outlined-adornment-amount">{title}</InputLabel>
+        <OutlinedInput
+          style={{ padding: '9px 12px' }}
+          id="outlined-adornment-amount"
+          startAdornment={<InputAdornment position="start">{prefix || '$'}</InputAdornment>}
+          label={title}
+          name={name}
+          type="number"
+          value={amount}
+          onChange={handleChange}
+          placeholder="0"
+        />
+      </FormControl>
     </>
   )
 }

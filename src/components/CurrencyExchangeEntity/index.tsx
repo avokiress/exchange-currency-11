@@ -39,8 +39,8 @@ interface DataFetch {
 export const CurrencyExchangeEntity = () => {
   const initialData = useRef({
     amount: '',
-    from: '',
-    to: '',
+    from: 'USD',
+    to: 'RUB',
   });
 
   const [dataConverter, setDataConverter] = useState<DataConverter>(initialData.current)
@@ -58,7 +58,7 @@ export const CurrencyExchangeEntity = () => {
 
   useEffect(() => {
     if (isValidData()) {
-      console.log('dataConverter: ', dataConverter);
+      console.log('>>>>> dataConverter: ', dataConverter);
       // fetchData(dataConverter);
     }
   }, [dataConverter])
@@ -84,7 +84,7 @@ export const CurrencyExchangeEntity = () => {
       <Box sx={{ alignItems: 'center', border: '1px solid #e0e1e5', padding: '20px', borderRadius: '8px' }}>
 
         <Box sx={{ display: 'flex' }}>
-          <Box sx={{ marginRight: '10px' }}>
+          <Box sx={{ marginRight: '20px' }}>
             <AmountInput name="amount" title="Amount" prefix={prefix} onChange={handleConvert} />
           </Box>
 
