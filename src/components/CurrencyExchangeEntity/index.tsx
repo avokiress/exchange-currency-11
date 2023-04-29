@@ -14,6 +14,7 @@ import { useFetchConvert } from 'hooks/useFetchConvert'
 
 import { Chart } from "components/Chart"
 import { AmountInput } from 'components/AmountInput'
+import { SharedButtons } from 'components/SharedButtons'
 import { DropdownCurrency } from 'components/DropdownCurrency'
 import { ShortcutCurrency } from 'components/ShortcutCurrency'
 
@@ -70,7 +71,7 @@ export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }
 
   useEffect(() => {
     if (isValidData(dataConverter)) {
-      // fetchData(dataConverter);
+      fetchData(dataConverter);
     }
   }, [dataConverter])
 
@@ -106,8 +107,6 @@ export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }
   }
 
   const prefix = currencyToSymbolMap(dataConverter.from);
-
-  console.log('dataConverter: ', dataConverter);
 
   return (
     <>
@@ -171,6 +170,7 @@ export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }
               <h3>Exchange rate for {data.date}</h3>
               <p>{dataConverter.amount} {countryCurrencySymbol[dataConverter.from]} = {data.result} {dataConverter.to}</p>
               <p>1 {dataConverter.to} = {data.info?.rate} {dataConverter.from}</p>
+              <SharedButtons text={`1 ${dataConverter.to} = ${data.info?.rate} ${dataConverter.from}`} />
             </>
           }
         </Box>
