@@ -4,7 +4,7 @@ const apiBaseUrl = "https://api.apilayer.com/";
 const timeseriesEndPoint = "exchangerates_data/timeseries";
 const symbolsEndPoint = "exchangerates_data/symbols";
 const accessKey = import.meta.env.VITE_APILAYER_ACCESS_KEY;
-console.log('accessKey', import.meta.env.VITE_APILAYER_ACCESS_KEY);
+
 export interface exchangeRatesServiceType {
   getTimeseries: (startDate: Date, endDate: Date, base?: string, symbols?: string[]) => Promise<any>
   getSymbols: () => Promise<any>
