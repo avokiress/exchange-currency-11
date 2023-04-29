@@ -7,8 +7,7 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import FormHelperText from '@mui/material/FormHelperText';
 import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
-
-type DropdownData = {
+interface DropdownData {
   title: string
   field: string
   currency: string
