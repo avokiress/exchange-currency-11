@@ -1,12 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 
 
+import { Box } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 
 import { CurrencyExchangeEntity } from 'components/CurrencyExchangeEntity'
-import { Box } from '@mui/material';
 import { HistoryProvider } from '../../context';
 
 export const CurrencyExchange = () => {
