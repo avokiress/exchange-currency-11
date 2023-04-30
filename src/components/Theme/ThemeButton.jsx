@@ -4,11 +4,15 @@ import { Box } from '@mui/material';
 import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { useThemeMode } from "../../context/ThemeModeProvider";
 
 
 const ThemeButton = () => {
 
   const theme = useTheme();
+
+  const toggleTheme = useThemeMode()
+
 
   return (
     <Box
@@ -23,7 +27,7 @@ const ThemeButton = () => {
         p: 3,
       }}
     >
-      <IconButton sx={{ ml: 1 }} color="inherit">
+      <IconButton sx={{ ml: 1 }} onClick={toggleTheme} color="inherit">
         {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
       </IconButton>
     </Box>
