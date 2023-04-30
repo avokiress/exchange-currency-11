@@ -2,13 +2,6 @@ import { useState, useCallback } from "react";
 import { urlConvert } from 'config';
 
 const accessKey = import.meta.env.VITE_APILAYER_ACCESS_KEY;
-
-interface OptionsData {
-  method: string
-  redirect: string
-  headers: string
-}
-
 interface FechData {
   amount: string
   from: string
