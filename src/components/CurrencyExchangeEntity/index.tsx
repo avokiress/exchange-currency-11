@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import currencyToSymbolMap from 'currency-symbol-map'
 
-import Box from '@mui/material/Box';
+import { Box } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -10,14 +10,24 @@ import MultipleStopIcon from '@mui/icons-material/MultipleStop';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 
-import { AmountInput } from 'components/AmountInput'
 import { useFetchConvert } from 'hooks/useFetchConvert'
+
+import { Chart } from "components/Chart"
+import { AmountInput } from 'components/AmountInput'
+import { SharedButtons } from 'components/SharedButtons'
 import { DropdownCurrency } from 'components/DropdownCurrency'
+import { ShortcutCurrency } from 'components/ShortcutCurrency'
 
 import countryCurrencySymbol from 'constants/countryCurrencySymbol';
 interface DataHandler {
   name: string
   value: string
+}
+
+interface PropsData {
+  favorites: boolean
+  from: string
+  to: string
 }
 
 interface DataConverter {
@@ -33,36 +43,46 @@ interface DataFetch {
   fetchData(data: DataConverter): string
 }
 
+const SHORTCUTS_FROM = ['USD', 'EUR', 'BTC', 'GBP']
+const SHORTCUTS_TO = ['RUB', 'UAH', 'GBP']
 
-export const CurrencyExchangeEntity = () => {
+const isValidData = (data: DataConverter) => {
+  let valid = true;
+  for (const field in data) {
+    if (data[field].length === 0) {
+      valid = false;
+    }
+  }
+  return valid;
+};
+
+
+export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }: PropsData) => {
   const initialData = useRef({
     amount: '',
-    from: '',
-    to: '',
+    from,
+    to,
   });
 
+  const [isFavorites, setFavorites] = useState<boolean>(favorites);
   const [dataConverter, setDataConverter] = useState<DataConverter>(initialData.current)
   const { data, isLoading, error, fetchData } = useFetchConvert<DataFetch>()
 
-  const isValidData = () => {
-    let valid = true;
-    for (const field in dataConverter) {
-      if (dataConverter[field].length === 0) {
-        valid = false;
-      }
-    }
-    return valid;
-  };
 
   useEffect(() => {
-    if (isValidData()) {
-      fetchData(dataConverter);
+    console.log(dataConverter)
+    if (isValidData(dataConverter)) {
+      // fetchData(dataConverter);
     }
   }, [dataConverter])
 
 
   const handleConvert = (data: DataHandler) => {
     setDataConverter(__prevData => ({ ...__prevData, ...data }))
+  }
+
+  const handleFavorites = (): void => {
+    setFavorites(__prevData => !__prevData)
   }
 
   const onChangeConvert = () => {
@@ -74,58 +94,92 @@ export const CurrencyExchangeEntity = () => {
     }))
   }
 
+  const renderShortcuts = (__shortcuts: string[], field: string) => {
+    return __shortcuts.map((shortcut: string) => (
+      <ShortcutCurrency
+        key={`shortcut_from_${shortcut}`}
+        value={shortcut}
+        name={field}
+        onChange={handleConvert}
+        checked={dataConverter[field] === shortcut}
+      />
+    )
+    )
+  }
+
   const prefix = currencyToSymbolMap(dataConverter.from);
 
   return (
     <>
-      <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Box sx={{ alignItems: 'center', border: '1px solid #e0e1e5', padding: '20px', borderRadius: '8px' }}>
 
-        <Box sx={{ marginRight: '10px' }}>
-          <AmountInput name="amount" title="Amount" prefix={prefix} onChange={handleConvert} />
+        <Box sx={{ display: 'flex' }}>
+          <Box sx={{ marginRight: '20px' }}>
+            <AmountInput name="amount" title="Amount" prefix={prefix} onChange={handleConvert} />
+          </Box>
+
+          <Box>
+            <DropdownCurrency
+              title="From"
+              field="from"
+              currency={dataConverter.from}
+              onChange={handleConvert}
+            />
+            <Box sx={{ margin: '10px 0 0' }}>
+              {renderShortcuts(SHORTCUTS_FROM, 'from')}
+            </Box>
+          </Box>
+
+          <Box sx={{ margin: '12px 10px 0' }}>
+            <Button onClick={onChangeConvert}>
+              <MultipleStopIcon sx={{ fontSize: 40 }} />
+            </Button>
+          </Box>
+
+          <Box>
+            <DropdownCurrency
+              title="To"
+              field="to"
+              currency={dataConverter.to}
+              onChange={handleConvert}
+            />
+            <Box sx={{ margin: '10px 0 0' }}>
+              {renderShortcuts(SHORTCUTS_TO, 'to')}
+            </Box>
+
+          </Box>
+
+          <Box sx={{ margin: '12px 10px 0' }}>
+            <Button>
+              {isFavorites
+                ?
+                <StarIcon sx={{ fontSize: "40px" }} onClick={handleFavorites} />
+                :
+                <StarBorderIcon sx={{ fontSize: "40px" }} onClick={handleFavorites} />
+              }
+            </Button>
+          </Box>
         </Box>
 
-        <Box>
-          <DropdownCurrency
-            title="From"
-            field="from"
-            currency={dataConverter.from}
-            onChange={handleConvert}
-          />
-        </Box>
+        <Box sx={{ padding: '20px 0' }}>
+          {isLoading &&
+            <CircularProgress />
+          }
 
-        <Box sx={{ margin: '25px 10px 0' }}>
-          <Button onClick={onChangeConvert}>
-            <MultipleStopIcon sx={{ fontSize: 40 }} />
-          </Button>
+          {!isLoading && data &&
+            <>
+              <h3>Exchange rate for {data.date}</h3>
+              <p>{dataConverter.amount} {countryCurrencySymbol[dataConverter.from]} = {data.result} {dataConverter.to}</p>
+              <p>1 {dataConverter.to} = {data.info?.rate} {dataConverter.from}</p>
+              <SharedButtons text={`1 ${dataConverter.to} = ${data.info?.rate} ${dataConverter.from}`} />
+            </>
+          }
         </Box>
-
-        <Box>
-          <DropdownCurrency
-            title="To"
-            field="to"
-            currency={dataConverter.to}
-            onChange={handleConvert}
-          />
-        </Box>
-        <Box>
-          <Button>
-            <StarIcon fontSize="large" />
-            <StarBorderIcon fontSize="large" />
-          </Button>
-        </Box>
-      </Box>
-
-      <Box sx={{ padding: '20px 0' }}>
-        {isLoading &&
-          <CircularProgress />
-        }
 
         {!isLoading && data &&
-          <>
-            <h3>Exchange rate for {data.date}</h3>
-            <p>{dataConverter.amount} {countryCurrencySymbol[dataConverter.from]} = {data.result} {dataConverter.to}</p>
-            <p>1 {dataConverter.to} = {data.info?.rate} {dataConverter.from}</p>
-          </>
+          <Box sx={{ padding: '20px 0' }}>
+            <Chart startDate={new Date('2023-01-01')} endDate={new Date()} base={dataConverter.from} symbols={[dataConverter.to]} />
+          </Box>
         }
 
         {!isLoading && error &&

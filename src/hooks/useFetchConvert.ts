@@ -1,5 +1,12 @@
 import { useState, useCallback } from "react";
-import { apiKey, urlConvert } from 'config';
+import { urlConvert } from 'config';
+
+const accessKey = import.meta.env.VITE_APILAYER_ACCESS_KEY;
+interface FechData {
+  amount: string
+  from: string
+  to: string
+}
 
 export const useFetchConvert = () => {
 
@@ -8,11 +15,11 @@ export const useFetchConvert = () => {
   const [error, setError] = useState();
 
 
-  const fetchData = useCallback((options = {}) => {
-    var myHeaders = new Headers();
-    myHeaders.append("apikey", apiKey);
+  const fetchData = useCallback<T>((options = {}): T => {
+    const myHeaders = new Headers();
+    myHeaders.append("apikey", accessKey);
 
-    var requestOptions = {
+    const requestOptions: FechData = {
       method: 'GET',
       redirect: 'follow',
       headers: myHeaders

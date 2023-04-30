@@ -14,8 +14,6 @@ export const Main = () => {
     // dispatch(fetchSymbols())
   }, [])
 
-  console.log('symbols: ', symbols);
-  console.log('loading: ', loading);
   if (loading) return <p>Loading...</p>
 
 
@@ -24,7 +22,7 @@ export const Main = () => {
       <h1>Converter</h1>
       <ModalSelectRegion />
       <CurrencyExchange />
-      <Chart startDate={new Date('2023-01-01')} endDate={new Date()} base="RUB" symbols={["EUR", "USD"]} />
+      {/* <Chart startDate={new Date('2023-01-01')} endDate={new Date()} base="RUB" symbols={["EUR", "USD"]} /> */}
     </>
   )
 }
