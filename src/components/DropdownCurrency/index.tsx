@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import countryCurrencySymbol from 'constants/countryCurrencySymbol';
 
-import { Box } from '@mui/material/';
+import { Box } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 
