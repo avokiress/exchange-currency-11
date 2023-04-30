@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import currencyToSymbolMap from 'currency-symbol-map'
 
-import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -19,6 +18,10 @@ import { DropdownCurrency } from 'components/DropdownCurrency'
 import { ShortcutCurrency } from 'components/ShortcutCurrency'
 
 import countryCurrencySymbol from 'constants/countryCurrencySymbol';
+import { Box } from '@mui/material';
+import { useHistory } from '../../context';
+import CalcHistory from '../CalcHistory/CalcHistory';
+import CalcHistoryToggleButton from '../CalcHistoryToggleButton/CalcHistoryToggleButton';
 interface DataHandler {
   name: string
   value: string
@@ -67,6 +70,8 @@ export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }
   const [isFavorites, setFavorites] = useState<boolean>(favorites);
   const [dataConverter, setDataConverter] = useState<DataConverter>(initialData.current)
   const { data, isLoading, error, fetchData } = useFetchConvert<DataFetch>()
+  const { add } = useHistory();
+  const dataHash = useRef<string>('');
 
 
   useEffect(() => {
@@ -74,6 +79,24 @@ export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }
       // fetchData(dataConverter);
     }
   }, [dataConverter])
+
+  // Запись в историю изненений результатов конвертации
+  useEffect(() => {
+    if (data) {
+
+      const amount = data?.query?.amount;
+      const from = data?.query?.from;
+      const to = data?.query?.to;
+      const result = data?.result;
+      const hash = `${amount}-${from}-${to}-${result}`;
+      if (dataHash.current !== hash) {
+        dataHash.current = hash;
+        if (result) {
+          add(from, to, amount, result);
+        }
+      }
+    }
+  }, [data]);
 
 
   const handleConvert = (data: DataHandler) => {
@@ -110,6 +133,7 @@ export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }
 
   return (
     <>
+
       <Box sx={{ alignItems: 'center', border: '1px solid #e0e1e5', padding: '20px', borderRadius: '8px' }}>
 
         <Box sx={{ display: 'flex' }}>
@@ -177,7 +201,7 @@ export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }
 
         {!isLoading && data &&
           <Box sx={{ padding: '20px 0' }}>
-            <Chart startDate={new Date('2023-01-01')} endDate={new Date()} base={dataConverter.from} symbols={[dataConverter.to]} />
+            <Chart startDate={new Date('2023-01-01')} endDate={new Date()} base={dataConverter.to} symbols={[dataConverter.from]} />
           </Box>
         }
 
@@ -185,7 +209,10 @@ export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }
           <Alert severity="error">{error}</Alert>
         }
       </Box>
-
+      <Box sx={{ padding: '20px 0' }}>
+        <CalcHistoryToggleButton />
+        <CalcHistory />
+      </Box>
     </>
   )
 }
