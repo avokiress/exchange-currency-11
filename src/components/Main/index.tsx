@@ -1,26 +1,21 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 
-import { fetchSymbols } from 'store/symbolsSlice';
+import { Menu } from 'components/Menu'
 import { CurrencyExchange } from 'components/CurrencyExchange'
+import ModalSelectRegion from "components/ModalSelectRegion";
+
+import { FavoritesProvider } from '../../context';
+
 
 export const Main = () => {
-  const dispatch = useDispatch()
-  const { symbols, loading } = useSelector((state)=> state.symbols)
-
-  useEffect(() => {
-    dispatch(fetchSymbols())
-  }, [])
-
-  console.log('symbols: ', symbols);
-  console.log('loading: ', loading);
-  if (loading) return <p>Loading...</p>
-  
-
   return (
     <>
-      <h1>Symbols</h1>
-      <CurrencyExchange />
+      <FavoritesProvider>
+        <Menu />
+        <h1>Converter</h1>
+        <ModalSelectRegion />
+        <CurrencyExchange />
+      </FavoritesProvider>
     </>
   )
 }

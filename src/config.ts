@@ -1,0 +1,1 @@
+export const urlConvert = 'https://api.apilayer.com/exchangerates_data/convert';

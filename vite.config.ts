@@ -13,7 +13,10 @@ export default defineConfig({
       context: path.resolve(__dirname, 'src/context/'),
       layouts: path.resolve(__dirname, 'src/layouts/'),
       store: path.resolve(__dirname, 'src/store/'),
+      service: path.resolve(__dirname, 'src/service/'),
+      utils: path.resolve(__dirname, 'src/utils/'),
       css: path.resolve(__dirname, 'src/css/'),
+      config: path.resolve(__dirname, 'src/config.ts'),
     },
   },
   server: {
