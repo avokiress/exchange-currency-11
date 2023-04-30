@@ -51,32 +51,36 @@ export const Markets = ({ currency = [] }) => {
   // console.log('countryCurrencySymbol: ', countryCurrencySymbol)
 
   const renderMarket = (__currency: string) => {
-    const market = marketList[__currency][0]
-    return (
-      <Box sx={{ border: '1px solid #e0e1e5', padding: '20px', borderRadius: '8px', width: '45%' }}>
-        <h3 style={{ alignItems: 'center', display: 'flex' }}>
-          <div className={`currency-flag currency-flag-sm currency-flag-${__currency.toLowerCase()}`}></div>
-          {market.name} ({market.country})
-        </h3>
-        <Button
-          component="a"
-          href={market.website}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {market.website}
-        </Button>
-        <Divider />
-        
-      </Box>
-    )
+    if (!__currency || !marketList[__currency]) return null;
+    const __markets = marketList[__currency]
+
+    return __markets.map(market => {
+      return (
+        <Box key={market.acronym} sx={{ border: '1px solid #e0e1e5', padding: '20px', borderRadius: '8px', width: '45%', background: '#f4f4f5', marginBottom: '20px' }}>
+          <h3 style={{ alignItems: 'center', display: 'flex' }}>
+            <div className={`currency-flag currency-flag-sm currency-flag-${__currency.toLowerCase()}`}></div>
+            {market.name} ({market.country})
+          </h3>
+          <Button
+            component="a"
+            href={market.website}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {market.website}
+          </Button>
+        </Box>
+      )
+    })
   }
 
   return (
     <>
       <h2>{renderTitle()}</h2>
-      <Box sx={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between' }}>
+      <Box sx={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
         {renderMarket(keyOne)}
+      </Box>
+      <Box sx={{ alignItems: 'center', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
         {renderMarket(keyTwo)}
       </Box>
     </>
