@@ -82,6 +82,13 @@ export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }
     }
   }, [dataConverter])
 
+  useEffect(() => {
+    setDataConverter(__prevData => ({
+      ...__prevData,
+      from
+    }))
+  }, [from])
+
   // Запись в историю изненений результатов конвертации
   useEffect(() => {
     if (data) {

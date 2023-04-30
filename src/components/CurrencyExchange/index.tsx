@@ -15,6 +15,8 @@ export const CurrencyExchange = () => {
   const [countConverter, setCountConverter] = useState([CurrencyExchangeEntity])
   const { currency } = useRegion()
 
+  console.log('currency: ', currency)
+
   return (
     <>
       <h2>Currency exchange</h2>
