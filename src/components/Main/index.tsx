@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchSymbols } from 'store/symbolsSlice';
 import { CurrencyExchange } from 'components/CurrencyExchange'
 import { Chart } from "components/Chart"
+import { Markets } from "components/Markets"
 
 export const Main = () => {
   const dispatch = useDispatch()

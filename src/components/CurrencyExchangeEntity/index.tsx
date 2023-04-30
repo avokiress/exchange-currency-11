@@ -13,6 +13,7 @@ import StarIcon from '@mui/icons-material/Star';
 import { useFetchConvert } from 'hooks/useFetchConvert'
 
 import { Chart } from "components/Chart"
+import { Markets } from "components/Markets"
 import { AmountInput } from 'components/AmountInput'
 import { SharedButtons } from 'components/SharedButtons'
 import { DropdownCurrency } from 'components/DropdownCurrency'
@@ -180,6 +181,10 @@ export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }
             <Chart startDate={new Date('2023-01-01')} endDate={new Date()} base={dataConverter.from} symbols={[dataConverter.to]} />
           </Box>
         }
+
+        <Box>
+          <Markets currency={[dataConverter.from, dataConverter.to]} />
+        </Box>
 
         {!isLoading && error &&
           <Alert severity="error">{error}</Alert>
