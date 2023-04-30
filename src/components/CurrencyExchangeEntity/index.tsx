@@ -47,7 +47,7 @@ interface DataFetch {
   fetchData(data: DataConverter): string
 }
 
-const SHORTCUTS_FROM = ['USD', 'EUR', 'BTC', 'GBP']
+const SHORTCUTS_FROM = ['RUB', 'USD', 'EUR', 'BTC', 'GBP']
 const SHORTCUTS_TO = ['RUB', 'UAH', 'GBP']
 
 const isValidData = (data: DataConverter) => {
@@ -76,6 +76,7 @@ export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }
 
 
   useEffect(() => {
+    console.log(dataConverter)
     if (isValidData(dataConverter)) {
       fetchData(dataConverter);
     }
