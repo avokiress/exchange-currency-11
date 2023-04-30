@@ -4,14 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchSymbols } from 'store/symbolsSlice';
 import { CurrencyExchange } from 'components/CurrencyExchange'
 import { Chart } from "components/Chart"
-// import { IconButton, useTheme } from "@mui/material";
-// import Brightness4Icon from '@mui/icons-material/Brightness4';
-// import Brightness7Icon from '@mui/icons-material/Brightness7';
-// import React from "react";
 import ThemeButton from "../../components/Theme/ThemeButton.jsx";
-
-// const ColorModeContext = React.createContext({ toggleColorMode: () => { } });
-
+import ModalSelectRegion from "../ModalSelectRegion/index.js";
 
 export const Main = () => {
   const dispatch = useDispatch()
@@ -26,12 +20,13 @@ export const Main = () => {
   if (loading) return <p>Loading...</p>
 
 
+
   return (
     <>
     <ThemeButton />
       <h1>Converter</h1>
+      <ModalSelectRegion />
       <CurrencyExchange />
-      {/* <Chart startDate={new Date('2023-01-01')} endDate={new Date()} base="RUB" symbols={["EUR", "USD"]} /> */}
     </>
   )
 }

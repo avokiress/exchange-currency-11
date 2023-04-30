@@ -4,6 +4,8 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import CustomizedAxisTick from "./CustomizedAxisTick";
 import { interpolateInferno } from "d3-scale-chromatic"
 import { interpolateColors } from "../../utils/colorGenerator";
+import { Typography } from "@mui/material";
+import { Box } from "@mui/system";
 
 type ChartProps = {
     base: string,
@@ -24,7 +26,7 @@ const Chart: React.FC<ChartProps> = ({ startDate, endDate, base, symbols }) => {
             const { rates } = responce;
             for (let date in rates) {
                 const normalizedRates = Object.keys(rates[date]).reduce((acc: RatesRowType, symbol: string) => {
-                    acc[symbol] = (1 / rates[date][symbol]).toFixed(2);
+                    acc[symbol] = (1 / rates[date][symbol]).toFixed(4);
                     return acc;
                 }, {});
                 chartData.push({
@@ -47,8 +49,11 @@ const Chart: React.FC<ChartProps> = ({ startDate, endDate, base, symbols }) => {
         useEndAsStart: false,
     });
 
-    return (<>Chart
-        <div style={{ height: 300 }}>
+    return (<Box>
+        <Typography variant="h6" gutterBottom component="div">
+            Chart of changes in {base} versus {symbols.join(',')}
+        </Typography>
+        <Box sx={{ height: 300 }}>
             <ResponsiveContainer width="100%" height="100%">
                 <LineChart
                     width={500}
@@ -69,8 +74,7 @@ const Chart: React.FC<ChartProps> = ({ startDate, endDate, base, symbols }) => {
                     {symbols.map((item, index) => <Line type="monotone" dataKey={item} key={item} stroke={colors[index]} dot={false} />)}
                 </LineChart>
             </ResponsiveContainer>
-        </div>
-
-    </>);
+        </Box>
+    </Box>);
 }
 export default Chart;

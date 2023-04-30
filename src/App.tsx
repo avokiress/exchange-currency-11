@@ -3,6 +3,7 @@ import { Main } from 'components/Main'
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useThemeValue } from './context/ThemeModeProvider';
+import { RegionProvider } from './context/RegionProvider'
 
 function App() {
 
@@ -15,8 +16,10 @@ function App() {
   })
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Main />
+      <RegionProvider>
+        <CssBaseline />
+        <Main />
+      </RegionProvider>
     </ThemeProvider>
   )
 }
