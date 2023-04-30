@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 type dataNull = undefined | null
 
@@ -8,8 +8,16 @@ interface functions<T> {
     getItem: () => void
 }
 
-export const useLocalStorage = <T extends string | object>(name: string, data: T | dataNull): [string | T, functions<T>] => {
+export const useLocalStorage = <T extends string | object>(name: string, data: T | dataNull = undefined): [string | T, functions<T>] => {
     const [state, setState] = useState(data ? data : '')
+
+    useEffect(() => {
+        if(!!data) {
+            setItem(data)
+        } else {
+            getItem()
+        }
+    }, [])
 
     const setItem = (newData: T): void => {
         setState(newData)  
@@ -23,7 +31,12 @@ export const useLocalStorage = <T extends string | object>(name: string, data: T
 
     const getItem = (): void => {
         const result = localStorage.getItem(name)
-        setState(() => typeof result === 'string' ? JSON.parse(result) : '')
+        if(typeof result === 'string' && result[0] === '{') {
+            setState(JSON.parse(result))
+        } else {
+            setState(typeof result === 'string' ? result : '')
+        }
+        
     }
 
     return [state, {
