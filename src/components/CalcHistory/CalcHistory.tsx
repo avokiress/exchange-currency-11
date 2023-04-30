@@ -6,7 +6,7 @@ const CalcHistory: React.FC = () => {
     const { history, open } = useHistory();
 
     return (<>
-        <Collapse in={open} timeout="auto" unmountOnExit>
+        <Collapse in={open} timeout="auto">
             <Box sx={{ margin: 1 }}>
                 <Typography variant="h6" gutterBottom component="div">
                     Convertation history

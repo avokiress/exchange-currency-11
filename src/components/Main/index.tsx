@@ -5,7 +5,7 @@ import { fetchSymbols } from 'store/symbolsSlice';
 import { CurrencyExchange } from 'components/CurrencyExchange'
 import { Chart } from "components/Chart"
 import ThemeButton from "../../components/Theme/ThemeButton.jsx";
-import ModalSelectRegion from "../ModalSelectRegion/index.js";
+import ModalSelectRegion from "../ModalSelectRegion";
 
 export const Main = () => {
   const dispatch = useDispatch()
