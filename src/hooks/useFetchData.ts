@@ -1,18 +1,19 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useCallback, useState } from "react"
 
 interface fetchData <T>{
     data: T | null,
     isLoading: boolean
-    error: boolean
+    error: boolean,
+    getDataCallback: () => void
 }
 
 export const useFetchData = <T>(url: string): fetchData<T> => {
     const [data, setData] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
-    const [error, setError] = useState(false)
+    const [error, setError] = useState(false)    
 
-    const getData = () => {
+    const getDataCallback = useCallback(() => {
         setIsLoading(true)
         axios.get(url)
         .then(res => {
@@ -28,16 +29,12 @@ export const useFetchData = <T>(url: string): fetchData<T> => {
             setIsLoading(false)
             console.error('Error', error)
         })
-    }
-    
-
-    useEffect(() => {
-        getData()
     }, [url])
 
     return {
         data,
         isLoading,
-        error
+        error,
+        getDataCallback
     }
 }

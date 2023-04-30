@@ -35,12 +35,14 @@ interface ipConfig {
 }
 
 const ModalSelectRegion = () => {
-    // const [region, {setItem}] = useLocalStorage('region')
-    const {region, setRegion} = useRegion()
+    const {region, setRegion} = useRegion(null)
     const [countryName, setCountryName] = useState<string | null>(null)
     const [isOpen, setIsOpen] = useState<boolean>(false)
-    const {data: result, isLoading, error} = useFetchData<ipConfig>('https://ipapi.co/json/')
+    const {data: result, isLoading, error, getDataCallback} = useFetchData<ipConfig>('https://ipapi.co/json/')
 
+    useEffect(() => {
+        getDataCallback()
+    }, [])
 
     const hundlerChange = (value: any) => {
         setCountryName(value.target.value)
