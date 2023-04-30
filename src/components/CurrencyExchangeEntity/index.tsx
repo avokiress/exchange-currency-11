@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import currencyToSymbolMap from 'currency-symbol-map'
 
-import Box from '@mui/material/Box';
+import { Box } from '@mui/material/';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -14,6 +14,7 @@ import { useFetchConvert } from 'hooks/useFetchConvert'
 
 import { Chart } from "components/Chart"
 import { AmountInput } from 'components/AmountInput'
+import { SharedButtons } from 'components/SharedButtons'
 import { DropdownCurrency } from 'components/DropdownCurrency'
 import { ShortcutCurrency } from 'components/ShortcutCurrency'
 
@@ -107,8 +108,6 @@ export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }
 
   const prefix = currencyToSymbolMap(dataConverter.from);
 
-  console.log('dataConverter: ', dataConverter);
-
   return (
     <>
       <Box sx={{ alignItems: 'center', border: '1px solid #e0e1e5', padding: '20px', borderRadius: '8px' }}>
@@ -171,6 +170,7 @@ export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }
               <h3>Exchange rate for {data.date}</h3>
               <p>{dataConverter.amount} {countryCurrencySymbol[dataConverter.from]} = {data.result} {dataConverter.to}</p>
               <p>1 {dataConverter.to} = {data.info?.rate} {dataConverter.from}</p>
+              <SharedButtons text={`1 ${dataConverter.to} = ${data.info?.rate} ${dataConverter.from}`} />
             </>
           }
         </Box>
