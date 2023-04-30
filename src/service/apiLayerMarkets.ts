@@ -1,5 +1,3 @@
-import moment from "moment";
-
 const apiBaseUrl = "http://api.marketstack.com/";
 const symbolsEndPoint = "v1/exchanges";
 const accessKey = import.meta.env.VITE_APILAYER_ACCESS_KEY_MARKETS;

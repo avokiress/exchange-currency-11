@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import currencyToSymbolMap from 'currency-symbol-map'
 
-import { Box } from '@mui/material/';
+import { Box } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -13,7 +13,7 @@ import StarIcon from '@mui/icons-material/Star';
 import { useFetchConvert } from 'hooks/useFetchConvert'
 
 import { Chart } from "components/Chart"
-import { Markets } from "components/Markets"
+import { MarketList } from "components/MarketList"
 import { AmountInput } from 'components/AmountInput'
 import { SharedButtons } from 'components/SharedButtons'
 import { DropdownCurrency } from 'components/DropdownCurrency'
@@ -183,7 +183,7 @@ export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }
         }
 
         <Box>
-          <Markets currency={[dataConverter.from, dataConverter.to]} />
+          <MarketList currency={[dataConverter.from, dataConverter.to]} />
         </Box>
 
         {!isLoading && error &&
