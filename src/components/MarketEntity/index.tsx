@@ -29,8 +29,8 @@ const getIsOpenMarket = (openTime, closeTime, timezone) => {
 }
 
 export const MarketEntity = ({ currency = '' }) => {
-  const { markets } = useSelector((state) => state.markets)
-  // const markets = marketList;
+  // const { markets } = useSelector((state) => state.markets)
+  const markets = marketList;
 
   const __markets = markets[currency]
   if (!__markets) return null;

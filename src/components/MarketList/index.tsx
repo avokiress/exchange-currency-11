@@ -5,7 +5,7 @@ import { Box } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import { MarketEntity } from 'components/MarketEntity';
 
-import { fetchMarkets } from 'store/marketsSlice';
+// import { fetchMarkets } from 'store/marketsSlice';
 import { marketList } from 'constants/marketList'
 
 
@@ -14,12 +14,12 @@ export const MarketList = ({ currency = [] }) => {
   const [keyTwo, setKeyTwo] = useState('')
 
   const dispatch = useDispatch()
-  const { markets, loading } = useSelector((state) => state.markets)
-  // const markets = marketList;
+  // const { markets, loading } = useSelector((state) => state.markets)
+  const markets = marketList;
 
-  useEffect(() => {
-    dispatch(fetchMarkets())
-  }, [])
+  // useEffect(() => {
+  //   dispatch(fetchMarkets())
+  // }, [])
 
   useEffect(() => {
     if (currency.length === 2) {
@@ -46,7 +46,7 @@ export const MarketList = ({ currency = [] }) => {
   }
 
 
-  if (loading) return <CircularProgress />
+  // if (loading) return <CircularProgress />
   if (!markets) return null;
   if (!keyOne || !keyTwo) return null;
   if (!markets[keyOne] || !markets[keyTwo]) return null;
