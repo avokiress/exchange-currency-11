@@ -208,10 +208,10 @@ export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }
         {!isLoading && error &&
           <Alert severity="error">{error}</Alert>
         }
-      </Box>
-      <Box sx={{ padding: '20px 0' }}>
-        <CalcHistoryToggleButton />
-        <CalcHistory />
+        <Box sx={{ padding: '20px 0' }}>
+          <CalcHistoryToggleButton />
+          <CalcHistory />
+        </Box>
       </Box>
     </>
   )
