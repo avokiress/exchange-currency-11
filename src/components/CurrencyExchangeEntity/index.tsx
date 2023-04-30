@@ -77,7 +77,7 @@ export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }
 
   useEffect(() => {
     if (isValidData(dataConverter)) {
-      // fetchData(dataConverter);
+      fetchData(dataConverter);
     }
   }, [dataConverter])
 
@@ -206,16 +206,16 @@ export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }
           </Box>
         }
 
-        <Box>
-          <MarketList currency={[dataConverter.from, dataConverter.to]} />
-        </Box>
-
         {!isLoading && error &&
           <Alert severity="error">{error}</Alert>
         }
         <Box sx={{ padding: '20px 0' }}>
           <CalcHistoryToggleButton />
           <CalcHistory />
+        </Box>
+
+        <Box>
+          <MarketList currency={[dataConverter.from, dataConverter.to]} />
         </Box>
       </Box>
     </>

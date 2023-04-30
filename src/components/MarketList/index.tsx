@@ -14,11 +14,11 @@ export const MarketList = ({ currency = [] }) => {
   const [keyTwo, setKeyTwo] = useState('')
 
   const dispatch = useDispatch()
-  // const { markets, loading } = useSelector((state) => state.markets)
-  const markets = marketList;
+  const { markets, loading } = useSelector((state) => state.markets)
+  // const markets = marketList;
 
   useEffect(() => {
-    // dispatch(fetchMarkets())
+    dispatch(fetchMarkets())
   }, [])
 
   useEffect(() => {
@@ -45,8 +45,11 @@ export const MarketList = ({ currency = [] }) => {
     return title;
   }
 
-  // if (loading) return <CircularProgress />
+
+  if (loading) return <CircularProgress />
+  if (!markets) return null;
   if (!keyOne || !keyTwo) return null;
+  if (!markets[keyOne] || !markets[keyTwo]) return null;
 
 
   return (
