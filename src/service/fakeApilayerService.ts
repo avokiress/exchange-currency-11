@@ -1,6 +1,6 @@
 import { exchangeRatesServiceType } from "./apilayerService";
-import timeseries from "../constants/timeseries.json";
-import symbols from "../constants/symbols.json"
+import timeseries from "./fakeApiData/timeseries.json";
+import symbols from "./fakeApiData/symbols.json"
 
 const apilayerService: exchangeRatesServiceType = {
   getTimeseries: async (startDate: Date, endDate: Date, base: string = 'RUB', symbols = ['EUR', "USD"]) => {
@@ -8,6 +8,7 @@ const apilayerService: exchangeRatesServiceType = {
     return Promise.resolve(timeseries);
   },
   getSymbols: async () => {
+    console.log("### fake getSymbols");
     return Promise.resolve(symbols);
   }
 }
