@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 
-import { Box } from '@mui/material';
+import { Box } from '@mui/material/';
 import Divider from '@mui/material/Divider';
 import Button from '@mui/material/Button';
 import AddIcon from '@mui/icons-material/Add';
 
 import { CurrencyExchangeEntity } from 'components/CurrencyExchangeEntity'
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 export const CurrencyExchange = () => {
   const [countConverter, setCountConverter] = useState([CurrencyExchangeEntity])
@@ -16,7 +17,7 @@ export const CurrencyExchange = () => {
       {countConverter.map((Component, index) => {
         return (
           <Box sx={{ padding: '10px 0' }} key={index}>
-            <Component />
+            <Component from={'USD'} />
             <Divider />
           </Box>
         )
