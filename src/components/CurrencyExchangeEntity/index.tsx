@@ -76,7 +76,6 @@ export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }
 
 
   useEffect(() => {
-    console.log(dataConverter)
     if (isValidData(dataConverter)) {
       fetchData(dataConverter);
     }
