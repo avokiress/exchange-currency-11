@@ -3,12 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { fetchSymbols } from 'store/symbolsSlice';
 import { CurrencyExchange } from 'components/CurrencyExchange'
-<<<<<<< HEAD
-
-=======
-import { Chart } from "../Chart"
 import ModalSelectRegion from "../ModalSelectRegion";
->>>>>>> alex-develop
 
 export const Main = () => {
   const dispatch = useDispatch()
