@@ -1,10 +1,13 @@
 import 'css/App.css'
 import { Main } from 'components/Main'
+import { RegionProvider } from './context/RegionProvider'
 
 function App() {
   return (
     <>
-      <Main />
+      <RegionProvider>
+        <Main />
+      </RegionProvider>
     </>
   )
 }

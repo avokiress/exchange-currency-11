@@ -1,8 +1,8 @@
 import countries from "countries-list"
-import { useLocalStorage } from "../../hooks/useLocalStorage"
 import { useEffect, useState } from "react"
 import { useFetchData } from "../../hooks/useFetchData"
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, MenuItem, Select } from "@mui/material";
+import { useRegion } from '../../context/RegionProvider'
 
 interface ipConfig {
     ip: string,
@@ -35,17 +35,19 @@ interface ipConfig {
 }
 
 const ModalSelectRegion = () => {
-    const [region, {setItem}] = useLocalStorage('region')
+    // const [region, {setItem}] = useLocalStorage('region')
+    const {region, setRegion} = useRegion()
     const [countryName, setCountryName] = useState<string | null>(null)
     const [isOpen, setIsOpen] = useState<boolean>(false)
     const {data: result, isLoading, error} = useFetchData<ipConfig>('https://ipapi.co/json/')
+
 
     const hundlerChange = (value: any) => {
         setCountryName(value.target.value)
     }
 
     const saveRegion = () => {
-        setItem(countryName ?? '')
+        setRegion(countryName ?? '')
         setIsOpen(false)
     }
     
@@ -80,7 +82,6 @@ const ModalSelectRegion = () => {
                                 </MenuItem>
                             )
                         })}
-                        {/* {countries.continents.map(item => )} */}
                     </Select>
                 </DialogContent>
                 <DialogActions>
