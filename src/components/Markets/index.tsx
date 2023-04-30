@@ -47,8 +47,8 @@ export const Markets = ({ currency = [] }) => {
   if (loading) return <p>Loading...</p>
   if (!keyOne || !keyTwo) return null;
 
-  console.log('marketList: ', marketList)
-  console.log('countryCurrencySymbol: ', countryCurrencySymbol)
+  // console.log('marketList: ', marketList)
+  // console.log('countryCurrencySymbol: ', countryCurrencySymbol)
 
   const renderMarket = (__currency: string) => {
     const market = marketList[__currency][0]
