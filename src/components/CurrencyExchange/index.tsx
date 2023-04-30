@@ -13,7 +13,7 @@ import { HistoryProvider } from '../../context';
 
 export const CurrencyExchange = () => {
   const [countConverter, setCountConverter] = useState([CurrencyExchangeEntity])
-  const {currency} = useRegion()
+  const { currency } = useRegion()
 
   return (
     <>
@@ -22,7 +22,7 @@ export const CurrencyExchange = () => {
         return (
           <Box sx={{ padding: '10px 0' }} key={index}>
             <HistoryProvider>
-            <Component from={currency} />
+              <Component from={currency} />
               <Divider />
             </HistoryProvider>
           </Box>
