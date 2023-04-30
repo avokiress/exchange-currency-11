@@ -12,8 +12,12 @@ import 'css/normalize.css'
 import 'css/index.css'
 import 'css/currency-flags.css'
 
+import { ThemeModeProvider } from './context/ThemeModeProvider';
+
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <Provider store={store}>
-    <App />
-  </Provider>
+  <ThemeModeProvider>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </ThemeModeProvider>
 );

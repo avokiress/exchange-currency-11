@@ -1,3 +1,4 @@
+import React from "react";
 import { useState, useEffect, useRef } from 'react';
 import currencyToSymbolMap from 'currency-symbol-map'
 
@@ -13,6 +14,7 @@ import StarIcon from '@mui/icons-material/Star';
 import { useFetchConvert } from 'hooks/useFetchConvert'
 
 import { Chart } from "components/Chart"
+import { MarketList } from "components/MarketList"
 import { AmountInput } from 'components/AmountInput'
 import { SharedButtons } from 'components/SharedButtons'
 import { DropdownCurrency } from 'components/DropdownCurrency'
@@ -75,11 +77,17 @@ export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }
 
 
   useEffect(() => {
-    console.log(dataConverter)
     if (isValidData(dataConverter)) {
-      // fetchData(dataConverter);
+      fetchData(dataConverter);
     }
   }, [dataConverter])
+
+  useEffect(() => {
+    setDataConverter(__prevData => ({
+      ...__prevData,
+      from
+    }))
+  }, [from])
 
   // Запись в историю изненений результатов конвертации
   useEffect(() => {
@@ -212,6 +220,10 @@ export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }
         <Box sx={{ padding: '20px 0' }}>
           <CalcHistoryToggleButton />
           <CalcHistory />
+        </Box>
+
+        <Box>
+          <MarketList currency={[dataConverter.from, dataConverter.to]} />
         </Box>
       </Box>
     </>
