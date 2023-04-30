@@ -1,8 +1,10 @@
+import React from "react";
 import { useState, useCallback } from "react";
 import { urlConvert } from 'config';
 
 const accessKey = import.meta.env.VITE_APILAYER_ACCESS_KEY;
-interface FechData {
+
+interface FechData<T> {
   amount: string
   from: string
   to: string
@@ -15,7 +17,7 @@ export const useFetchConvert = () => {
   const [error, setError] = useState();
 
 
-  const fetchData = useCallback<T>((options = {}): T => {
+  const fetchData = useCallback<T>((options = {}): FetchData<T> => {
     const myHeaders = new Headers();
     myHeaders.append("apikey", accessKey);
 

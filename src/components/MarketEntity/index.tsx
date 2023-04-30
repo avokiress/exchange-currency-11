@@ -1,3 +1,4 @@
+import React from "react";
 import { useSelector } from "react-redux";
 import moment from 'moment-timezone'
 
@@ -12,7 +13,13 @@ import { marketList } from 'constants/marketList'
 const OPEN_TIME = "10:00AM";
 const CLOSE_TIME = "7:00PM";
 
-const getIsOpenMarket = (openTime, closeTime, timezone) => {
+interface DataMarketHours {
+  openTime: string,
+  closeTime: string,
+  timezone: string
+}
+
+const getIsOpenMarket = (openTime, closeTime, timezone): DataMarketHours => {
   const now = moment.tz(timezone);
   const date = now.format("YYYY-MM-DD");
   const storeOpenTime = moment.tz(date + ' ' + openTime, "YYYY-MM-DD h:mmA", timezone);

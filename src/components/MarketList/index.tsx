@@ -1,8 +1,16 @@
+import React from "react";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+
+/**
+ * этот фукционал закомментировала, для запроса данных надо быть авторизованным
+ * сохранила данные в константу
+ * в целом запрос и сохранение в redux осталось
+*/
+
+// import { useDispatch, useSelector } from "react-redux";
 
 import { Box } from '@mui/material';
-import CircularProgress from '@mui/material/CircularProgress';
+// import CircularProgress from '@mui/material/CircularProgress';
 import { MarketEntity } from 'components/MarketEntity';
 
 // import { fetchMarkets } from 'store/marketsSlice';
@@ -13,7 +21,7 @@ export const MarketList = ({ currency = [] }) => {
   const [keyOne, setKeyOne] = useState('')
   const [keyTwo, setKeyTwo] = useState('')
 
-  const dispatch = useDispatch()
+  // const dispatch = useDispatch()
   // const { markets, loading } = useSelector((state) => state.markets)
   const markets = marketList;
 
