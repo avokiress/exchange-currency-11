@@ -12,7 +12,6 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 
 import { useFetchConvert } from 'hooks/useFetchConvert'
-import { useLocalStorage } from 'hooks/useLocalStorage'
 
 import { Chart } from "components/Chart"
 import { MarketList } from "components/MarketList"
@@ -23,6 +22,7 @@ import { ShortcutCurrency } from 'components/ShortcutCurrency'
 
 import countryCurrencySymbol from 'constants/countryCurrencySymbol';
 import { useHistory } from '../../context';
+import { useFavorites } from '../../context';
 import CalcHistory from '../CalcHistory/CalcHistory';
 import CalcHistoryToggleButton from '../CalcHistoryToggleButton/CalcHistoryToggleButton';
 interface DataHandler {
@@ -73,15 +73,20 @@ export const CurrencyExchangeEntity = ({ from = '', to = '' }: PropsData) => {
   const [isFavorites, setFavorites] = useState<boolean>(false);
   const [dataConverter, setDataConverter] = useState<DataConverter>(initialData.current)
   const { data, isLoading, error, fetchData } = useFetchConvert<DataFetch>()
-  const [favoritesState = [], { setItem, getItem }] = useLocalStorage('favorites')
+  const { addFavorites, deleteFavorites, favorites } = useFavorites();
   const { add } = useHistory();
   const dataHash = useRef<string>('');
 
-  console.log('favoritesState: ', favoritesState);
 
   useEffect(() => {
-    console.log('getItem: ', getItem());
-  }, [])
+    const { from, to } = dataConverter;
+    const hasFavorites = favorites.filter(f => f.join() === [from, to].join()).length > 0
+    if (hasFavorites) {
+      return setFavorites(true)
+    }
+    return setFavorites(false)
+  }, [dataConverter, favorites])
+
 
   useEffect(() => {
     if (isValidData(dataConverter)) {
@@ -95,6 +100,10 @@ export const CurrencyExchangeEntity = ({ from = '', to = '' }: PropsData) => {
       from
     }))
   }, [from])
+
+  useEffect(() => {
+    setFavorites(false);
+  }, [from, to])
 
   // Запись в историю изненений результатов конвертации
   useEffect(() => {
@@ -121,8 +130,11 @@ export const CurrencyExchangeEntity = ({ from = '', to = '' }: PropsData) => {
 
   const handleFavorites = (): void => {
     const { from, to } = dataConverter;
-    const newFavorites = [...favoritesState, [from, to]]
-    setItem(newFavorites)
+    if (isFavorites) {
+      deleteFavorites([from, to])
+    } else {
+      addFavorites([from, to])
+    }
     setFavorites(__prevData => !__prevData)
   }
 
@@ -133,6 +145,7 @@ export const CurrencyExchangeEntity = ({ from = '', to = '' }: PropsData) => {
       from: to,
       to: from,
     }))
+    setFavorites(false)
   }
 
   const renderShortcuts = (__shortcuts: string[], field: string) => {
@@ -149,6 +162,11 @@ export const CurrencyExchangeEntity = ({ from = '', to = '' }: PropsData) => {
   }
 
   const prefix = currencyToSymbolMap(dataConverter.from);
+  const isDisabledFavorites = !dataConverter.from || !dataConverter.to;
+
+  // console.log('dataConverter[to]: ', dataConverter[to]);
+  // console.log('dataConverter[from]: ', dataConverter[from]);
+  // console.log('isDisabledFavorites: ', isDisabledFavorites);
 
   return (
     <>
@@ -192,7 +210,7 @@ export const CurrencyExchangeEntity = ({ from = '', to = '' }: PropsData) => {
           </Box>
 
           <Box sx={{ margin: '12px 10px 0' }}>
-            <Button>
+            <Button disabled={isDisabledFavorites}>
               {isFavorites
                 ?
                 <StarIcon sx={{ fontSize: "40px" }} onClick={handleFavorites} />

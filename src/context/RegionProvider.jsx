@@ -5,7 +5,7 @@ import { useLocalStorage } from "../hooks/useLocalStorage"
 const RegionContext = createContext(null)
 
 export const getCurrency = (value) => {
-    console.log('value', value)
+    // console.log('value', value)
     if(!!value && typeof value !== 'undefined') {
         const newRegion = Object.values(countries.countries).find(item => item.name === value)
         return newRegion.currency
