@@ -6,7 +6,7 @@ export interface exchangeRatesServiceType {
   getMarkets: () => Promise<any>
 }
 
-const apiLayerMarkets: exchangeRatesServiceType = {
+const apiMarkets: exchangeRatesServiceType = {
   getMarkets: async () => {
     let result = null;
     try {
@@ -19,4 +19,4 @@ const apiLayerMarkets: exchangeRatesServiceType = {
   }
 }
 
-export default apiLayerMarkets
+export default apiMarkets

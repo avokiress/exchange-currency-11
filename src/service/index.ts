@@ -1,4 +1,4 @@
 import apilayerService from "./fakeApilayerService"
-import apiLayerMarkets from "./apiLayerMarkets"
+import apiMarkets from "./apiMarkets"
 
-export { apilayerService, apiLayerMarkets }
+export { apilayerService, apiMarkets }

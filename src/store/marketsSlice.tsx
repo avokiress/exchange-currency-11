@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { apiLayerMarkets } from "service";
+import { apiMarkets } from "service";
 
 interface MarketsState {
   markets: object
@@ -60,7 +60,7 @@ const initialState = {
 
 export const fetchMarkets = createAsyncThunk<Returned>(
   'markets/fetchMarkets',
-  apiLayerMarkets.getMarkets
+	apiMarkets.getMarkets
 )
 
 const marketsSlice = createSlice({
