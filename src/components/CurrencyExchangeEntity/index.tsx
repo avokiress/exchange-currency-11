@@ -12,6 +12,7 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 
 import { useFetchConvert } from 'hooks/useFetchConvert'
+import { useLocalStorage } from 'hooks/useLocalStorage'
 
 import { Chart } from "components/Chart"
 import { MarketList } from "components/MarketList"
@@ -62,25 +63,38 @@ const isValidData = (data: DataConverter) => {
 };
 
 
-export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }: PropsData) => {
+export const CurrencyExchangeEntity = ({ from = '', to = '' }: PropsData) => {
   const initialData = useRef({
     amount: '',
     from,
     to,
   });
 
-  const [isFavorites, setFavorites] = useState<boolean>(favorites);
+  const [isFavorites, setFavorites] = useState<boolean>(false);
   const [dataConverter, setDataConverter] = useState<DataConverter>(initialData.current)
   const { data, isLoading, error, fetchData } = useFetchConvert<DataFetch>()
+  const [favoritesState = [], { setItem, getItem }] = useLocalStorage('favorites')
   const { add } = useHistory();
   const dataHash = useRef<string>('');
 
+  console.log('favoritesState: ', favoritesState);
+
+  useEffect(() => {
+    console.log('getItem: ', getItem());
+  }, [])
 
   useEffect(() => {
     if (isValidData(dataConverter)) {
       fetchData(dataConverter);
     }
   }, [dataConverter])
+
+  useEffect(() => {
+    setDataConverter(__prevData => ({
+      ...__prevData,
+      from
+    }))
+  }, [from])
 
   // Запись в историю изненений результатов конвертации
   useEffect(() => {
@@ -106,6 +120,9 @@ export const CurrencyExchangeEntity = ({ from = '', to = '', favorites = false }
   }
 
   const handleFavorites = (): void => {
+    const { from, to } = dataConverter;
+    const newFavorites = [...favoritesState, [from, to]]
+    setItem(newFavorites)
     setFavorites(__prevData => !__prevData)
   }
 
